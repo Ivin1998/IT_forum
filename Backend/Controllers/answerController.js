@@ -5,14 +5,14 @@ const generateToken = require("../utils/generateToken");
 const questions = require("../models/questionModel");
 
 const Answer = asyncHandler(async (req, res) => {
-  const { email, answer, question } = req.body;
+  const { email, answer, question, category } = req.body;
 
   const userId = await User.findOne({ email }, { _id: 1 });
-
+  
   const replyanswers = await answers.create({
     email,
     question,
-    answer,
+    category
   });
 
   if (replyanswers) {
@@ -22,6 +22,7 @@ const Answer = asyncHandler(async (req, res) => {
       email: replyanswers.email,
       question: question,
       answer: replyanswers.answer,
+      category: replyanswers.category,
       token: generateToken(replyanswers._id),
     });
   } else {

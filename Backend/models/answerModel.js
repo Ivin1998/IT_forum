@@ -19,6 +19,11 @@ const answerSchema = mongoose.Schema({
         type:String,
         required:false,
         default:null
+    },
+    category:{
+        type:[String],
+        required:false,
+        default:'others'
     }},
     {
         timestamps: true,

@@ -9,10 +9,12 @@ import utilities from "../Helpers/Utility";
 import { Contextreact } from "./Context";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
+import Topics from "../assets/Categories.json";
 
 const ModalForm = ({ show, onHide }) => {
-  const { question, setQuestion,category,setCategory } = useContext(Contextreact);
-  
+  const { question, setQuestion, category, setCategory } =
+    useContext(Contextreact);
+
   const navigate = useNavigate();
 
   const helper = utilities();
@@ -22,17 +24,34 @@ const ModalForm = ({ show, onHide }) => {
   const userInfoParsed = JSON.parse(userInfo);
   const email = userInfoParsed?.email;
 
-  const Postquestion = async (question) => {    
+  const Postquestion = async (question) => {
+    const matchedCategories = [];
+    let isMatched = false; // Flag to check if any keyword matches
+    //check the categories and map it
+    Topics.forEach((topic) => {
+      topic.keywords.forEach((keyword) => {
+        if (question.toLowerCase().includes(keyword.toLowerCase())) {
+          matchedCategories.push(topic.category);
+          isMatched = true; // Mark as matched
+          return; // Exit the current keyword loop as we found a match
+        }
+      });
+    });
+    if (!isMatched) {
+      matchedCategories.push("Others");
+    }
+        
     if (!isGuest) {
       try {
         const config = {
           "Content-type": "application/json",
         };
-        const { data } = await axios.post(
+        await axios.post(
           `${REACT_SERVER_URL}/users/answers`,
           {
             email,
             question,
+            category:matchedCategories
           },
           config
         );
@@ -84,7 +103,9 @@ const ModalForm = ({ show, onHide }) => {
         </Modal.Body>
         <Modal.Footer>
           <Button onClick={onHide}>Cancel</Button>
-          <Button onClick={() => Postquestion(question)} disabled={!question}>Post question</Button>
+          <Button onClick={() => Postquestion(question)} disabled={!question}>
+            Post question
+          </Button>
         </Modal.Footer>
       </Modal>
     </div>

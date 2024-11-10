@@ -1,0 +1,41 @@
+[
+    {
+        "id": 0,
+        "category":"Web-dev",
+        "keywords": [
+            "HTML", "CSS", "JavaScript", "DOM", "React", "Angular", "Vue", "JSX", "TypeScript", "Babel", "ES6", "ESNext",
+            "State Management", "Redux", "Context API", "Component Lifecycle", "Hooks", "useState", "useEffect",
+            "Responsive Design", "Media Queries", "Flexbox", "Grid", "CSS Frameworks", "Bootstrap", "Tailwind",
+            "Animations", "Transitions", "CSS-in-JS",
+            "Lazy Loading", "Code Splitting", "Minification", "Bundling", "Webpack", "Parcel", "Caching", "CDN",
+            "HTTP/2", "Compression", "gzip", "Brotli", "Time to First Byte", "TTFB", "Lighthouse", "Core Web Vitals",
+            "Render Blocking", "Async", "Defer",
+            "Unit Testing", "Integration Testing", "End-to-End Testing", "Jest", "Mocha", "Chai", "Jasmine",
+            "Cypress", "Selenium", "Puppeteer", "Debugging", "Console", "Network Tab", "Breakpoints",
+            "Test Coverage", "TDD", "Mocking", "Stubbing", "Snapshot Testing", "Node.js", "Express.js", "Django", "Flask", "REST API", "GraphQL", "CRUD", "Authentication", "Authorization", 
+            "JWT", "OAuth", "Middleware", "Routing", "MVC Architecture", "Session", "Cookies",
+            "Database Connections", "MongoDB", "MySQL", "PostgreSQL", "Server", "Load Balancing", "Scaling", "Caching",
+            "SQL", "NoSQL", "Relational Database", "Document Database", "ORM", "Sequelize", "Mongoose",
+            "CRUD Operations", "Joins", "Indexing", "Data Modeling", "Relationships", "One-to-One", "One-to-Many",
+            "Query Optimization", "Transactions", "Stored Procedures", "Data Security", "Encryption", "SQL Injection"
+        ]
+    },
+    {
+        "id": 1,
+        "category":"architecture",
+        "keywords": [
+            "Git", "GitHub", "GitLab", "Bitbucket", "Branching", "Merging", "Pull Requests", "Conflicts", "Commit", 
+            "Push", "Pull", "Rebase", "Collaboration", "CI/CD", "AWS", "Azure", "Google Cloud Platform", "Docker", 
+            "Kubernetes", "Containers", "CI/CD Pipeline", "Jenkins", "GitHub Actions", "Nginx", "Apache", "Load Balancer",
+            "Domain", "DNS", "SSL Certificates", "Web Servers", "Hosting", "Heroku", "Vercel", "Netlify",
+            "HTTPS", "SSL/TLS", "Certificates", "Cross-Site Scripting", "XSS", "Cross-Site Request Forgery", "CSRF",
+            "CORS", "Content Security Policy", "CSP", "Data Encryption", "Hashing", "Salt", "Secure HTTP Headers",
+            "Helmet.js", "Vulnerability Scanning", "OWASP",
+            "RESTful API", "GraphQL", "gRPC", "API Rate Limiting", "Caching", "Microservices Architecture", "Monolithic",
+            "API Gateway", "Service Discovery", "JSON", "XML", "WebSockets", "API Documentation", "OpenAPI", "Swagger",
+            "SEO", "Search Engine Optimization", "Accessibility", "a11y", "User Experience", "UX", "User Interface", "UI",
+            "Single Page Application", "SPA", "Multi-Page Application", "MPA", "Client-Server Model", "Full Stack Development",
+            "MVC", "Model-View-Controller", "Agile", "Scrum", "Project Management in Web Development"
+        ]
+    }
+]

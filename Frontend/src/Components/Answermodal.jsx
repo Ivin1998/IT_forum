@@ -3,8 +3,9 @@ import React, { useContext, useState } from "react";
 import { Button, Modal } from "react-bootstrap";
 import { REACT_SERVER_URL } from "../../config/ENV";
 import { Contextreact } from "./Context";
+import { FaEdit } from "react-icons/fa";
 
-const Answermodal = ({ question }) => {
+const Answermodal = ({ question, author }) => {
   const [showModal, setShowModal] = useState(false);
 
   const { answer, setAnswer } = useContext(Contextreact);
@@ -52,9 +53,19 @@ const Answermodal = ({ question }) => {
     setShowModal(false);
   };
 
+  const onReply =()=>{
+    setAnswer('');
+    setShowModal(true);
+  }
+
   return (
     <div>
-      <Button variant="light" onClick={() => getAnswer()}>
+      {author == "userPrivileges" ? (
+        <FaEdit onClick={() => getAnswer()} style={{ cursor: "pointer" }} />
+      ) : (
+        ""
+      )}
+      <Button variant="light" onClick={onReply} style={{marginLeft:'20%'}}>
         Reply
       </Button>
       <Modal
@@ -78,7 +89,7 @@ const Answermodal = ({ question }) => {
         </Modal.Body>
         <Modal.Footer>
           <Button onClick={onHide}>Cancel</Button>
-          <Button onClick={() => Postanswer(answer)}>Post your opinion</Button>
+          <Button onClick={() => Postanswer(answer)} disabled={!answer}>Post your opinion</Button>
         </Modal.Footer>
       </Modal>
     </div>

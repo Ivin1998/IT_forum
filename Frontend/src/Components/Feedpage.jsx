@@ -7,9 +7,8 @@ import Singlequestion from "./Singlequestion";
 import { Contextreact } from "./Context";
 
 const Feedpage = () => {
-  const [feeds, setFeeds] = useState("");
 
-  const { answer, question, deleted } = useContext(Contextreact);
+  const { answer, question, deleted,feeds, setFeeds } = useContext(Contextreact);
 
   const userInfo = localStorage.getItem("userInfo") ?? "";
 
@@ -32,6 +31,7 @@ const Feedpage = () => {
         config
       );
       setFeeds(data);
+      
     } catch (error) {
       console.log(error);
     }

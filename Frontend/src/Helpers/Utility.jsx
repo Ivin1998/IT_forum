@@ -5,8 +5,9 @@ export default function helpers() {
 
   const userInfoParsed = JSON.parse(userInfo);
   const isAdmin = userInfoParsed?.isAdmin;
+  const userEmail = userInfoParsed?.email;
 
   const isGuest = userInfoParsed?.email !== "guest@ivin.com" ? false : true;
 
-  return { userInfoParsed, isAdmin, isGuest };
+  return { userInfoParsed, isAdmin, isGuest,userEmail };
 }

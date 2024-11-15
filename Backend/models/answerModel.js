@@ -7,6 +7,11 @@ const answerSchema = mongoose.Schema({
         default:null
 
     },
+    name:{
+        type:String,
+        required:true,
+        default:'Guest User'
+    },
     question:{
         type:String,
         required:false,

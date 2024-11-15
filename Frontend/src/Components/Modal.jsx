@@ -23,6 +23,7 @@ const ModalForm = ({ show, onHide }) => {
   const userInfo = localStorage.getItem("userInfo");
   const userInfoParsed = JSON.parse(userInfo);
   const email = userInfoParsed?.email;
+  const name = userInfoParsed?.name;
 
   const Postquestion = async (question) => {
     const matchedCategories = [];
@@ -48,7 +49,7 @@ const ModalForm = ({ show, onHide }) => {
         };
         await axios.post(
           `${REACT_SERVER_URL}/users/answers`,
-          {
+          { name,
             email,
             question,
             category:matchedCategories

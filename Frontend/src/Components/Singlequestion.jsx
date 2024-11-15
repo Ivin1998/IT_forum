@@ -7,12 +7,14 @@ import axios from "axios";
 import { REACT_SERVER_URL } from "../../config/ENV";
 import Swal from "sweetalert2";
 import { Contextreact } from "./Context";
+import AuthorIcon from "../assets/AuthorIcon";
 
 const Singlequestion = ({ feeds }) => {
   const { setDeleted } = useContext(Contextreact);
 
   const helper = utilities();
   const hasAdminaccess = helper.isAdmin;
+  const loggedinUser = helper.userEmail;
 
   const Deletequestions = async (id) => {
     setDeleted(false);
@@ -58,13 +60,20 @@ const Singlequestion = ({ feeds }) => {
                 />
               </Col>
             </Row>
-            <Row className="mt-3" style={{ paddingLeft: "25px" }}>
+           
+              <AuthorIcon name={loggedinUser === item.email ? 'You' : item.name.charAt(0).toUpperCase() +item.name.slice(1) } />
+            <Row className=" answer-container">
               {item.answer}
             </Row>
-            <Row style={{ paddingLeft: "90%" }}>
+            <Row>
+              <Col md={10}>
+              </Col>
+              <Col md={2}>
+              <Answermodal question={item} author={loggedinUser === item.email ? 'userPrivileges' :''}  />{" "}
+              </Col>
               {" "}
-              <Answermodal question={item} />{" "}
             </Row>
+            
           </Col>
         </Container>
       ))}

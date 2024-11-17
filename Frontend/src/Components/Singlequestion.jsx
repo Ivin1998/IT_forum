@@ -10,8 +10,16 @@ import { Contextreact } from "./Context";
 import AuthorIcon from "../assets/AuthorIcon";
 
 const Singlequestion = ({ feeds }) => {
+  // Sort answers for each question and get the latest answer
+  const latestAnswers = feeds?.feed?.map((item) => {
+    const latestAnswer = item?.answers?.sort(
+      (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+    )[0];
+    return { ...item, latestAnswer }; // Attach the latest answer to the item
+  });
 
-  
+  console.log(latestAnswers);
+
   const { setDeleted } = useContext(Contextreact);
   
   const helper = utilities();
@@ -45,16 +53,17 @@ const Singlequestion = ({ feeds }) => {
       }
     });
   };
-  
 
   return (
     <div>
-      {feeds?.feed?.map((item) => (
+      {latestAnswers?.map((item) => (
         <Container className="singlepost" key={item._id}>
           <Col>
             <Row>
               <Col md={11}>
-                <Row style={{ padding: "25px" }}><b>{item.question}</b></Row>
+                <Row style={{ padding: "25px" }}>
+                  <b>{item.question}</b>
+                </Row>
               </Col>
               <Col md={1} style={{ padding: "25px" }} hidden={!hasAdminaccess}>
                 <FaRegTrashCan
@@ -63,25 +72,29 @@ const Singlequestion = ({ feeds }) => {
                 />
               </Col>
             </Row>
-           {item?.answers?.map((answer)=>(
-            <>
-            <AuthorIcon name={loggedinUser === answer.email ? 'You' : answer.email } />
-            <div>
-            <Row className=" answer-container">
-                <span>{answer.answer}</span>
-                </Row>
-            </div>
-            </>             
-           ))}
+            {item?.answers?.map((answer) => (
+              <>
+                <AuthorIcon
+                  name={loggedinUser === answer.email ? "You" : answer.email}
+                />
+                <div>
+                  <Row className=" answer-container">
+                    <span>{answer.answer}</span>
+                  </Row>
+                </div>
+              </>
+            ))}
             <Row>
-              <Col md={10}>
-              </Col>
+              <Col md={10}></Col>
               <Col md={2}>
-              <Answermodal question={item} author={loggedinUser === item.email ? 'userPrivileges' :''}  />{" "}
-              </Col>
-              {" "}
+                <Answermodal
+                  question={item}
+                  author={loggedinUser === item.email ? "userPrivileges" : ""}
+                  id={item._id}
+                  answerId={item?.latestAnswer?._id}
+                />{" "}
+              </Col>{" "}
             </Row>
-            
           </Col>
         </Container>
       ))}

@@ -68,30 +68,25 @@ const getAnswer = async (req, res) => {
   res.json({ feed });
 };
 
-// const getQuestion = async (req, res) => {
-//   const { id } = req.params;
 
-//   try {
-//     const question = await answers.findById(id); // Find the question by its ID
+const getquestionsAnswer = async (req, res) => {
+  const { id, answerId } = req.params;
 
-//     if (!question) {
-//       return res.status(404).json({ message: "Question not found" });
-//     }
-//     res.json({ question });
-//   } catch (error) {
-//     res.status(500).json({ message: "Server error" });
-//   }
-// };
+  const questionDoc = await Multipleanswers.findById(id);
 
-// const getquestionsAnswer = async (req, res) => {
-//   const { id } = req.query;
-//   try {
-//     const Replyanswer = await answers.findById(id, { answer: 1 }); //added projection
-//     res.json({ Replyanswer });
-//   } catch (error) {
-//     console.log(error);
-//   }
-// };
+  const answerIndex = questionDoc?.answers?.findIndex(
+    (ans) => ans._id.toString() === answerId
+  );
+
+  if (answerIndex === -1) {
+    res.status(404);
+    throw new Error("Answer not found with the given answerId");
+  } else {
+     const Answer = questionDoc?.answers[answerIndex]?.answer;     
+      res.json(Answer);
+
+  }
+};
 
 const deleteQuestion = async (req, res) => {
   const { id } = req.params;
@@ -107,7 +102,7 @@ module.exports = {
   // Answer,
   getAnswer,
   UpdateAnswer,
-  // getquestionsAnswer,
+  getquestionsAnswer,
   deleteQuestion,
   // getQuestion
 };

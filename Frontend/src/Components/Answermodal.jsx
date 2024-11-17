@@ -6,9 +6,7 @@ import { Contextreact } from "./Context";
 import { FaEdit } from "react-icons/fa";
 import utilities from "../Helpers/Utility";
 
-
-const Answermodal = ({ question, author }) => {
-  
+const Answermodal = ({ question, author, id, answerId }) => {
   const helper = utilities();
 
   const loggedInEmail = helper.userEmail;
@@ -22,12 +20,12 @@ const Answermodal = ({ question, author }) => {
       const config = {
         "Content-type": "application/json",
       };
-        await axios.post(
+      await axios.post(
         `${REACT_SERVER_URL}/users/multipleanswers`,
         {
           qn_id: question._id,
           email: loggedInEmail,
-          question:question,
+          question: question,
           answer: answer,
         },
         config
@@ -41,17 +39,17 @@ const Answermodal = ({ question, author }) => {
   };
 
   //get answer for editing
-  const getAnswer = async () => {
+  const getquestionsAnswer = async (id, answerId) => {
     setShowModal(true);
     try {
       const config = {
         "Content-type": "application/json",
       };
       const { data } = await axios.get(
-        `${REACT_SERVER_URL}/users/questionsanswer?id=${question._id}`,
+        `${REACT_SERVER_URL}/users/questionsanswer/${id}/${answerId}`,
         config
       );
-      setAnswer(data.Replyanswer.answer); // Set answer for input
+      setAnswer(data); // Set answer for input
     } catch (error) {
       let message = error?.response?.data?.message;
       console.log(message ? message : error.message);
@@ -62,19 +60,22 @@ const Answermodal = ({ question, author }) => {
     setShowModal(false);
   };
 
-  const onReply =()=>{
-    setAnswer('');
+  const onReply = () => {
+    setAnswer("");
     setShowModal(true);
-  }
+  };
 
   return (
     <div>
-      {/* {author == "userPrivileges" ? (
-        <FaEdit onClick={() => getAnswer()} style={{ cursor: "pointer" }} />
+      {author == "userPrivileges" && answerId ? (
+        <FaEdit
+          onClick={() => getquestionsAnswer(id, answerId)}
+          style={{ cursor: "pointer" }}
+        />
       ) : (
         ""
-      )} */}
-      <Button variant="light" onClick={onReply} style={{marginLeft:'20%'}}>
+      )}
+      <Button variant="light" onClick={onReply} style={{ marginLeft: "20%" }}>
         Reply
       </Button>
       <Modal
@@ -98,7 +99,9 @@ const Answermodal = ({ question, author }) => {
         </Modal.Body>
         <Modal.Footer>
           <Button onClick={onHide}>Cancel</Button>
-          <Button onClick={() => Postanswer(answer)} disabled={!answer}>Post your opinion</Button>
+          <Button onClick={() => Postanswer(answer)} disabled={!answer}>
+            Post your opinion
+          </Button>
         </Modal.Footer>
       </Modal>
     </div>

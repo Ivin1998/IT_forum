@@ -76,7 +76,7 @@ body{
   .singlepost{
     max-width: 600px;
     min-height: 200px;
-    margin: 20px auto;
+    margin: 10px auto;
     padding: 20px;
     background-color: #fff;
     border-radius: 8px;
@@ -117,4 +117,13 @@ body{
     background-color: aliceblue;
     margin-bottom: 0.5rem;
     margin-top: 0.5rem !important;
+  }
+  .reply{
+    margin-left: 2.5rem;
+
+  }
+
+  .modal-backdrop {
+    z-index: 1040 !important; /* Ensure it's behind the modal */
+    background-color: rgba(0, 0, 0, 0.5); /* Adjust transparency */
   }

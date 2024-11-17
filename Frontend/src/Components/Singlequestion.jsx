@@ -10,21 +10,25 @@ import { Contextreact } from "./Context";
 import AuthorIcon from "../assets/AuthorIcon";
 
 const Singlequestion = ({ feeds }) => {
-  // Sort answers for each question and get the latest answer
+
+  const helper = utilities();
+  const hasAdminaccess = helper.isAdmin;
+  const loggedinUser = helper.userEmail;
+
+  // Sort answers for each question and get the latest answer for getting it in edit
   const latestAnswers = feeds?.feed?.map((item) => {
-    const latestAnswer = item?.answers?.sort(
+
+    const userAnswers = item?.answers?.filter(answer => answer.email === loggedinUser);
+
+    const latestAnswer =userAnswers.sort(
       (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
     )[0];
     return { ...item, latestAnswer }; // Attach the latest answer to the item
   });
 
-  console.log(latestAnswers);
-
   const { setDeleted } = useContext(Contextreact);
+
   
-  const helper = utilities();
-  const hasAdminaccess = helper.isAdmin;
-  const loggedinUser = helper.userEmail;
 
   const Deletequestions = async (id) => {
     setDeleted(false);
@@ -78,7 +82,7 @@ const Singlequestion = ({ feeds }) => {
                   name={loggedinUser === answer.email ? "You" : answer.email}
                 />
                 <div>
-                  <Row className=" answer-container">
+                  <Row className="answer-container">
                     <span>{answer.answer}</span>
                   </Row>
                 </div>
@@ -87,12 +91,14 @@ const Singlequestion = ({ feeds }) => {
             <Row>
               <Col md={10}></Col>
               <Col md={2}>
-                <Answermodal
-                  question={item}
-                  author={loggedinUser === item.email ? "userPrivileges" : ""}
-                  id={item._id}
-                  answerId={item?.latestAnswer?._id}
-                />{" "}
+             
+              <Answermodal
+              question={item}
+              author={loggedinUser === item?.latestAnswer?.email ? "userPrivileges" : ""}
+              id={item._id}
+              answerId={item?.latestAnswer?._id}
+              />
+             
               </Col>{" "}
             </Row>
           </Col>

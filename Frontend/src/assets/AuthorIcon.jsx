@@ -1,15 +1,25 @@
-import React from 'react';
-import randomColor from 'randomcolor';
+import React, { useEffect, useState } from 'react';
+
 
 const AuthorIcon = ({name}) => {
-    
-    var color = randomColor({ 
-        luminosity: 'light',
-        format: 'rgb'});
-        
+
+  const [colorrender, setColorrender] = useState('');
+
+    useEffect(()=>{
+      const uniqueSeed = Math.abs(
+        name.split('').reduce((acc, char) => acc + char.charCodeAt(0), 0)
+      );
+      
+    // Generate an HSL color spread across the spectrum
+    const hue = 100 + (uniqueSeed % 300); 
+    const color = `hsl(${hue}, 60%, 70%)`; 
+    setColorrender(color);
+      console.log(color);
+    },[name])
+
     const Iconstyle ={
         display:'inline-block',
-        backgroundColor:color,
+        backgroundColor:colorrender,
         borderRadius:'10px',
         padding: '0.25rem',
         fontWeight:'bold',

@@ -1,38 +1,8 @@
 const asyncHandler = require("express-async-handler");
 const answers = require("../models/answerModel");
-// const User = require("../models/userModel");
 const generateToken = require("../utils/generateToken");
 const Multipleanswers = require("../models/multipleAnswersModel");
 
-// const Answer = asyncHandler(async (req, res) => {
-//   const { name,email, answer, question, category } = req.body;
-
-//   const userId = await User.findOne({ email }, { _id: 1 });
-
-//   const replyanswers = await answers.create({
-//     name,
-//     email,
-//     question,
-//     category,
-//     answer
-//   });
-
-//   if (replyanswers) {
-//     res.json({
-//       _id: replyanswers.id,
-//       user_id: userId._id,
-//       name: replyanswers.name,
-//       email: replyanswers.email,
-//       question: question,
-//       answer: replyanswers.answer,
-//       category: replyanswers.category,
-//       token: generateToken(replyanswers._id),
-//     });
-//   } else {
-//     res.status(400);
-//     throw new Error("Error Occurred");
-//   }
-// });
 
 const UpdateAnswer = asyncHandler(async (req, res) => {
   const { id, answerId, UpdatedAnswer } = req.body;
@@ -99,10 +69,8 @@ const deleteQuestion = async (req, res) => {
 };
 
 module.exports = {
-  // Answer,
   getAnswer,
   UpdateAnswer,
   getquestionsAnswer,
   deleteQuestion,
-  // getQuestion
 };

@@ -15,11 +15,11 @@ import ModalForm from "./Modal";
 import { Link } from "react-router-dom";
 import { Contextreact } from "./Context";
 const Header = () => {
-  const [showModal, setShowModal] = useState(false);
-  const { setQuestion } = useContext(Contextreact);
-  const handleLogout = () => {
-    localStorage.clear();
-  };
+    const [showModal, setShowModal] = useState(false);
+    const { setQuestion } = useContext(Contextreact);
+    const handleLogout = () => {
+      localStorage.clear();
+    };
 
   const Hidemodal = () => {
     setQuestion("");

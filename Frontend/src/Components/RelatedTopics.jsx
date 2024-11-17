@@ -5,7 +5,7 @@ import axios from "axios";
 import { Contextreact } from "./Context";
 
 const RelatedTopics = () => {
-  const { category, setCategory,question,deleted } = useContext(Contextreact);
+  const { category, setCategory, question, deleted } = useContext(Contextreact);
 
   const fetchCategories = async () => {
     //set for getting only unique entries
@@ -33,7 +33,7 @@ const RelatedTopics = () => {
 
   useEffect(() => {
     fetchCategories();
-  }, [question,deleted]);
+  }, [question, deleted]);
 
   return (
     <div className="category-container">

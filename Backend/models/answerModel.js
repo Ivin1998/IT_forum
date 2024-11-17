@@ -1,12 +1,6 @@
 const mongoose = require('mongoose');
 
 const answerSchema = mongoose.Schema({
-    qn_id:{
-        type:String,
-        required:false,
-        default:null
-
-    },
     name:{
         type:String,
         required:true,

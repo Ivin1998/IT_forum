@@ -14,6 +14,7 @@ const AuthorIcon = ({name}) => {
         padding: '0.25rem',
         fontWeight:'bold',
         fontSize:'0.65rem',
+        marginLeft:'1.5rem'
     }
     
   return (

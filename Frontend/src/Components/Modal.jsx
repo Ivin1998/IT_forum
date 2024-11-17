@@ -12,7 +12,7 @@ import { useNavigate } from "react-router-dom";
 import Topics from "../assets/Categories.json";
 
 const ModalForm = ({ show, onHide }) => {
-  const { question, setQuestion, category, setCategory } =
+  const { question, setQuestion } =
     useContext(Contextreact);
 
   const navigate = useNavigate();
@@ -48,8 +48,9 @@ const ModalForm = ({ show, onHide }) => {
           "Content-type": "application/json",
         };
         await axios.post(
-          `${REACT_SERVER_URL}/users/answers`,
-          { name,
+          `${REACT_SERVER_URL}/users/multipleanswers`,
+          { 
+            name,
             email,
             question,
             category:matchedCategories

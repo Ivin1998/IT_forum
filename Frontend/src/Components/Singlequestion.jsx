@@ -10,8 +10,10 @@ import { Contextreact } from "./Context";
 import AuthorIcon from "../assets/AuthorIcon";
 
 const Singlequestion = ({ feeds }) => {
-  const { setDeleted } = useContext(Contextreact);
 
+  
+  const { setDeleted } = useContext(Contextreact);
+  
   const helper = utilities();
   const hasAdminaccess = helper.isAdmin;
   const loggedinUser = helper.userEmail;
@@ -43,6 +45,7 @@ const Singlequestion = ({ feeds }) => {
       }
     });
   };
+  
 
   return (
     <div>
@@ -51,7 +54,7 @@ const Singlequestion = ({ feeds }) => {
           <Col>
             <Row>
               <Col md={11}>
-                <Row style={{ padding: "25px" }}>{item.question}</Row>
+                <Row style={{ padding: "25px" }}><b>{item.question}</b></Row>
               </Col>
               <Col md={1} style={{ padding: "25px" }} hidden={!hasAdminaccess}>
                 <FaRegTrashCan
@@ -60,11 +63,16 @@ const Singlequestion = ({ feeds }) => {
                 />
               </Col>
             </Row>
-           
-              <AuthorIcon name={loggedinUser === item.email ? 'You' : item.name.charAt(0).toUpperCase() +item.name.slice(1) } />
+           {item?.answers?.map((answer)=>(
+            <>
+            <AuthorIcon name={loggedinUser === answer.email ? 'You' : answer.email } />
+            <div>
             <Row className=" answer-container">
-              {item.answer}
-            </Row>
+                <span>{answer.answer}</span>
+                </Row>
+            </div>
+            </>             
+           ))}
             <Row>
               <Col md={10}>
               </Col>

@@ -113,6 +113,7 @@ body{
   }
   .answer-container{
     padding-left: 25px;
+    padding:2rem;
     background-color: aliceblue;
     margin-bottom: 0.5rem;
     margin-top: 0.5rem !important;

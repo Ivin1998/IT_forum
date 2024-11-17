@@ -4,8 +4,15 @@ import { Button, Modal } from "react-bootstrap";
 import { REACT_SERVER_URL } from "../../config/ENV";
 import { Contextreact } from "./Context";
 import { FaEdit } from "react-icons/fa";
+import utilities from "../Helpers/Utility";
+
 
 const Answermodal = ({ question, author }) => {
+  
+  const helper = utilities();
+
+  const loggedInEmail = helper.userEmail;
+
   const [showModal, setShowModal] = useState(false);
 
   const { answer, setAnswer } = useContext(Contextreact);
@@ -15,10 +22,12 @@ const Answermodal = ({ question, author }) => {
       const config = {
         "Content-type": "application/json",
       };
-      const { data } = await axios.put(
-        `${REACT_SERVER_URL}/users/answers`,
+        await axios.post(
+        `${REACT_SERVER_URL}/users/multipleanswers`,
         {
-          id: question._id,
+          qn_id: question._id,
+          email: loggedInEmail,
+          question:question,
           answer: answer,
         },
         config
@@ -60,11 +69,11 @@ const Answermodal = ({ question, author }) => {
 
   return (
     <div>
-      {author == "userPrivileges" ? (
+      {/* {author == "userPrivileges" ? (
         <FaEdit onClick={() => getAnswer()} style={{ cursor: "pointer" }} />
       ) : (
         ""
-      )}
+      )} */}
       <Button variant="light" onClick={onReply} style={{marginLeft:'20%'}}>
         Reply
       </Button>

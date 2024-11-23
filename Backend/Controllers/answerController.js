@@ -68,9 +68,32 @@ const deleteQuestion = async (req, res) => {
   }
 };
 
+const searchAnswer = async (req,res) =>{
+  const  {text} = req.params;
+  try {
+  
+   // Handle empty or undefined text
+   if (!text || text.trim() === "") {
+    return res.status(400).json({ error: "Search text is required" });
+  
+  }else{
+    const feed = await Multipleanswers.find({
+      question: { $regex: text, $options: "i" }, // Case-insensitive partial match
+    });
+    res.json({
+      feed
+    });
+  }
+  } catch (error) {
+    console.log(error);
+    
+  }
+}
+
 module.exports = {
   getAnswer,
   UpdateAnswer,
   getquestionsAnswer,
   deleteQuestion,
+  searchAnswer
 };

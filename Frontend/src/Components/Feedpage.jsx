@@ -5,11 +5,15 @@ import axios from "axios";
 import { REACT_SERVER_URL } from "../../config/ENV";
 import Singlequestion from "./Singlequestion";
 import { Contextreact } from "./Context";
+import utilities from "../Helpers/Utility";
+
 
 const Feedpage = () => {
 
-  const { answer, question, deleted,feeds, setFeeds } = useContext(Contextreact);
+  const { answer, question, deleted,feeds, setFeeds, search } = useContext(Contextreact);
 
+  const {loggedInName,capitalizeFirstLetter} = utilities();
+  
   const userInfo = localStorage.getItem("userInfo") ?? "";
 
   if (!userInfo) {
@@ -30,19 +34,51 @@ const Feedpage = () => {
         `${REACT_SERVER_URL}/users/answers`,
         config
       );
-      setFeeds(data);
+      setFeeds(data);  
+          
       
     } catch (error) {
       console.log(error);
     }
   };
 
-  useEffect(() => {
-    fetchfeeds();
+  const fetchSearchfeeds = async (search) => {        
+    try {
+      const config = {
+        "Content-type": "application/json",
+      };
+      const { data } = await axios.get(
+        `${REACT_SERVER_URL}/users/searchquestions/${search}`,
+        config
+      );
+      
+      if(data.feed.length >0){
+        
+        setFeeds(data);      
+      }
+      
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {      
+      fetchfeeds();
   }, [answer, question, deleted]);
+
+  useEffect(()=>{
+    if(search.length > 0){
+      fetchSearchfeeds(search);
+    }else{
+      fetchfeeds();
+    }
+
+  },[search])
+
 
   return (
     <div>
+      <span className="name">Hey, {capitalizeFirstLetter(loggedInName)}!</span>
       <Container>
         <Row style={{ paddingTop: "50px" }}>
           <Col md={2} className="sidecontainer">

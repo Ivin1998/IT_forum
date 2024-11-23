@@ -10,5 +10,10 @@ export default function helpers() {
 
   const isGuest = userInfoParsed?.email !== "guest@ivin.com" ? false : true;
 
-  return { userInfoParsed, isAdmin, isGuest,userEmail,loggedInName };
+  const  capitalizeFirstLetter=(str)=> {
+    if (!str) return "";
+    return str.replace(/^./, (char) => char.toUpperCase());
+  }
+
+  return { userInfoParsed, isAdmin, isGuest,userEmail,loggedInName,capitalizeFirstLetter };
 }

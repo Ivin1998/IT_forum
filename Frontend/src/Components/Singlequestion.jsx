@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { Col, Container, Row } from "react-bootstrap";
 import Answermodal from "./Answermodal";
 import { FaRegTrashCan } from "react-icons/fa6";
@@ -23,7 +23,9 @@ const Singlequestion = ({ feeds }) => {
     const latestAnswer =userAnswers.sort(
       (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
     )[0];
-    return { ...item, latestAnswer }; // Attach the latest answer to the item
+    
+    
+    return { ...item, latestAnswer }; // Attach the latest answer to the item   
   });
 
   const { setDeleted } = useContext(Contextreact);
@@ -60,8 +62,9 @@ const Singlequestion = ({ feeds }) => {
 
   return (
     <div>
+
       {latestAnswers?.map((item) => (
-        <Container className="singlepost" key={item._id}>
+        <Container  key={item._id} className="singlepost" >
           <Col>
             <Row>
               <Col md={11}>
@@ -77,7 +80,7 @@ const Singlequestion = ({ feeds }) => {
               </Col>
             </Row>
             {item?.answers?.map((answer) => (
-              <>
+              <div key={answer._id}>
                 <AuthorIcon
                   name={loggedinUser === answer.email ? "You" : answer.email}
                 />
@@ -86,7 +89,7 @@ const Singlequestion = ({ feeds }) => {
                     <span>{answer.answer}</span>
                   </Row>
                 </div>
-              </>
+              </div>
             ))}
             <Row>
               <Col md={10}></Col>

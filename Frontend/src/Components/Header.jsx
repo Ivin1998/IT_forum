@@ -16,7 +16,7 @@ import { Link } from "react-router-dom";
 import { Contextreact } from "./Context";
 const Header = () => {
     const [showModal, setShowModal] = useState(false);
-    const { setQuestion } = useContext(Contextreact);
+    const { setQuestion,setSearch } = useContext(Contextreact);
     const handleLogout = () => {
       localStorage.clear();
     };
@@ -25,6 +25,10 @@ const Header = () => {
     setQuestion("");
     setShowModal(false);
   };
+
+  const search =(value)=>{
+    setSearch(value);
+  }
 
   return (
     <>
@@ -48,6 +52,7 @@ const Header = () => {
                 <Form.Control
                   aria-label="Large"
                   aria-describedby="inputGroup-sizing-default"
+                  onChange={(e)=>search(e.target.value)}
                 />
               </InputGroup>
             </Nav>

@@ -14,7 +14,6 @@ const AuthorIcon = ({name}) => {
     const hue = 100 + (uniqueSeed % 300); 
     const color = `hsl(${hue}, 60%, 70%)`; 
     setColorrender(color);
-      console.log(color);
     },[name])
 
     const Iconstyle ={

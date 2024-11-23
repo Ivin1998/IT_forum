@@ -86,7 +86,7 @@ const Answermodal = ({ question, author, id, answerId }) => {
       >
         <Modal.Header closeButton onHide={onHide}>
           <Modal.Title id="contained-modal-title-vcenter">
-            Add your opinion
+            Add your opinion  
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>

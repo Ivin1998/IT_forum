@@ -8,10 +8,6 @@ const MultipleAnswersSchema = mongoose.Schema(
       required: true,
       default: "Guest User",
     },
-    question: {
-      type: String,
-      required: false,
-    },
     email: {
       type: String,
       required: true,

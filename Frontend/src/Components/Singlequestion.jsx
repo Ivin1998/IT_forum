@@ -86,7 +86,8 @@ const Singlequestion = ({ feeds }) => {
                 />
                 <div>
                   <Row className="answer-container">
-                    <span>{answer.answer}</span>
+                    <span>{<div dangerouslySetInnerHTML={{ __html: answer.answer }} />
+                  }</span>
                   </Row>
                 </div>
               </div>

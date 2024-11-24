@@ -5,6 +5,8 @@ import { REACT_SERVER_URL } from "../../config/ENV";
 import { Contextreact } from "./Context";
 import { FaEdit } from "react-icons/fa";
 import utilities from "../Helpers/Utility";
+import Editor from 'react-simple-wysiwyg';
+
 
 const Answermodal = ({ question, author, id, answerId }) => {
   const helper = utilities();
@@ -12,25 +14,43 @@ const Answermodal = ({ question, author, id, answerId }) => {
   const loggedInEmail = helper.userEmail;
 
   const [showModal, setShowModal] = useState(false);
+  const [isEdit, setIsEdit] = useState(false);
 
   const { answer, setAnswer } = useContext(Contextreact);
 
-  const Postanswer = async (answer) => {
+  const Postanswer = async (answer,EditanswerId) => {    
     try {
-      const config = {
-        "Content-type": "application/json",
-      };
-      await axios.post(
-        `${REACT_SERVER_URL}/users/multipleanswers`,
-        {
-          qn_id: question._id,
-          email: loggedInEmail,
-          question: question,
-          answer: answer,
-        },
-        config
-      );
-      setAnswer("");
+      if (!isEdit) {
+        
+        const config = {
+          "Content-type": "application/json",
+        };
+        await axios.post(
+          `${REACT_SERVER_URL}/users/multipleanswers`,
+          {
+            qn_id: question._id,
+            email: loggedInEmail,
+            question: question,
+            answer: answer,
+          },
+          config
+        );
+        setAnswer("");
+      } else {
+        const config = {
+          "Content-type": "application/json",
+        };
+        await axios.put(
+          `${REACT_SERVER_URL}/users/answers`,
+          {
+            "id": question._id,
+            "answerId": EditanswerId,
+            "UpdatedAnswer":answer
+          },
+          config
+        );
+        setAnswer("");
+      }
     } catch (error) {
       let message = error?.response?.data?.message;
       console.log(message ? message : error.message);
@@ -40,6 +60,8 @@ const Answermodal = ({ question, author, id, answerId }) => {
 
   //get answer for editing
   const getquestionsAnswer = async (id, answerId) => {
+    
+    setIsEdit(true);
     setShowModal(true);
     try {
       const config = {
@@ -58,6 +80,7 @@ const Answermodal = ({ question, author, id, answerId }) => {
 
   const onHide = () => {
     setShowModal(false);
+    setIsEdit(false);
   };
 
   const onReply = () => {
@@ -86,11 +109,11 @@ const Answermodal = ({ question, author, id, answerId }) => {
       >
         <Modal.Header closeButton onHide={onHide}>
           <Modal.Title id="contained-modal-title-vcenter">
-            Add your opinion  
+          {!isEdit ? " Post your opinion" : "Edit your opinion"}
           </Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <input
+          <Editor
             className="input"
             onChange={(e) => setAnswer(e.target.value)}
             value={answer}
@@ -99,8 +122,8 @@ const Answermodal = ({ question, author, id, answerId }) => {
         </Modal.Body>
         <Modal.Footer>
           <Button onClick={onHide}>Cancel</Button>
-          <Button onClick={() => Postanswer(answer)} disabled={!answer}>
-            Post your opinion
+          <Button onClick={() => Postanswer(answer,answerId)} disabled={!answer}>
+            {!isEdit ? " Post your opinion" : "Update your opinion"}
           </Button>
         </Modal.Footer>
       </Modal>

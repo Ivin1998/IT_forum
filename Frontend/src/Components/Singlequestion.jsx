@@ -14,22 +14,19 @@ const Singlequestion = ({ feeds }) => {
   const helper = utilities();
   const hasAdminaccess = helper.isAdmin;
   const loggedinUser = helper.userEmail;
+  const { setDeleted,latestQnAnswers,setLatestQuestionAnswers } = useContext(Contextreact);
 
   // Sort answers for each question and get the latest answer for getting it in edit
-  const latestAnswers = feeds?.feed?.map((item) => {
-
-    const userAnswers = item?.answers?.filter(answer => answer.email === loggedinUser);
-
-    const latestAnswer =userAnswers.sort(
-      (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
-    )[0];
-    
-    
-    return { ...item, latestAnswer }; // Attach the latest answer to the item   
-  });
-
-  const { setDeleted } = useContext(Contextreact);
-
+  useEffect(() => {
+    if (feeds?.feed) {
+      const latestAnswers = feeds.feed.map((item) => {
+        const userAnswers = item?.answers?.filter(answer => answer.email === loggedinUser);
+        const latestAnswer = userAnswers.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))[0];
+        return { ...item, latestAnswer };
+      });
+      setLatestQuestionAnswers(latestAnswers);
+    }
+  }, [feeds]);
   
 
   const Deletequestions = async (id) => {
@@ -60,10 +57,11 @@ const Singlequestion = ({ feeds }) => {
     });
   };
 
+
   return (
     <div>
 
-      {latestAnswers?.map((item) => (
+      {latestQnAnswers.map((item) => (
         <Container  key={item._id} className="singlepost" >
           <Col>
             <Row>

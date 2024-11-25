@@ -10,11 +10,12 @@ const Context = ({children}) => {
   const [category,setCategory] = useState([]);
   const [feeds, setFeeds] = useState("");
   const [search,setSearch] = useState('');
+  const [latestQnAnswers,setLatestQuestionAnswers] = useState([]);
 
   const [deleted,setDeleted] = useState(false);
 
   return (
-    <Contextreact.Provider value={{answer,setAnswer,question,setQuestion,deleted,setDeleted,category,setCategory,feeds, setFeeds, search,setSearch}}>
+    <Contextreact.Provider value={{answer,setAnswer,question,setQuestion,deleted,setDeleted,category,setCategory,feeds, setFeeds, search,setSearch,latestQnAnswers,setLatestQuestionAnswers}}>
       {children}
     </Contextreact.Provider>
   )

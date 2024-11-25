@@ -52,9 +52,8 @@ const getquestionsAnswer = async (req, res) => {
     res.status(404);
     throw new Error("Answer not found with the given answerId");
   } else {
-     const Answer = questionDoc?.answers[answerIndex]?.answer;     
-      res.json(Answer);
-
+    const Answer = questionDoc?.answers[answerIndex]?.answer;
+    res.json(Answer);
   }
 };
 
@@ -68,32 +67,56 @@ const deleteQuestion = async (req, res) => {
   }
 };
 
-const searchAnswer = async (req,res) =>{
-  const  {text} = req.params;
+const searchAnswer = async (req, res) => {
+  const { text } = req.params;
   try {
-  
-   // Handle empty or undefined text
-   if (!text || text.trim() === "") {
-    return res.status(400).json({ error: "Search text is required" });
-  
-  }else{
-    const feed = await Multipleanswers.find({
-      question: { $regex: text, $options: "i" }, // Case-insensitive partial match
-    });
-    res.json({
-      feed
-    });
-  }
+    // Handle empty or undefined text
+    if (!text || text.trim() === "") {
+      return res.status(400).json({ error: "Search text is required" });
+    } else {
+      const feed = await Multipleanswers.find({
+        question: { $regex: text, $options: "i" }, // Case-insensitive partial match
+      });
+      res.json({
+        feed,
+      });
+    }
   } catch (error) {
     console.log(error);
-    
   }
-}
+};
+
+const getCategoryquestion = async (req, res) => {
+  const { category } = req.params;
+ 
+  try {
+
+    if (!category) {
+      res.status(400); // 400 Bad Request for missing parameters
+      throw new Error("Category parameter is required");
+    }
+
+    const feed = await Multipleanswers.findOne({ category });
+
+    if (!feed) {
+      res.status(404); // 404 Not Found for missing category
+      throw new Error("Category not found");
+    }
+    res.json({ feeds: {
+      feed: [feed], // Wrap the feed object in an array
+    },});
+  
+  } catch (error) {
+    console.error(error.message);
+    res.status(res.statusCode || 500).json({ error: error.message });
+  }
+};
 
 module.exports = {
   getAnswer,
   UpdateAnswer,
   getquestionsAnswer,
   deleteQuestion,
-  searchAnswer
+  searchAnswer,
+  getCategoryquestion,
 };

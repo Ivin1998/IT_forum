@@ -5,7 +5,7 @@ import axios from "axios";
 import { Contextreact } from "./Context";
 
 const RelatedTopics = () => {
-  const { category, setCategory, question, deleted } = useContext(Contextreact);
+  const { category, setCategory, question, deleted,setLatestQuestionAnswers } = useContext(Contextreact);
 
   const fetchCategories = async () => {
     //set for getting only unique entries
@@ -31,6 +31,22 @@ const RelatedTopics = () => {
     }
   };
 
+  const showCategory = async (category)=>{
+    try {
+      const config = {
+        "Content-type": "application/json",
+      };
+      const { data } = await axios.get(
+        `${REACT_SERVER_URL}/users/category/${category}`,
+        config
+      );
+      setLatestQuestionAnswers(data.feeds.feed);
+      
+  }catch (error) {
+    console.log(error);
+  }
+}
+
   useEffect(() => {
     fetchCategories();
   }, [question, deleted]);
@@ -40,7 +56,7 @@ const RelatedTopics = () => {
       <Col>
         <Row>
           {category.map((category) => (
-            <span className="category" key={category}>
+            <span onClick={()=>showCategory(category)} className="category" key={category}>
               {category}
             </span>
           ))}

@@ -1,4 +1,4 @@
-import React, { useCallback, useContext, useEffect, useState } from "react";
+import React, { useCallback, useContext, useEffect } from "react";
 import { Col, Container, Row } from "react-bootstrap";
 import RelatedTopics from "./RelatedTopics";
 import axios from "axios";
@@ -34,8 +34,8 @@ const Feedpage = () => {
         `${REACT_SERVER_URL}/users/answers`,
         config
       );
-      setFeeds(data);  
-          
+      setFeeds(data); 
+
       
     } catch (error) {
       console.log(error);

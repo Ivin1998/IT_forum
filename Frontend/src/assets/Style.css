@@ -55,7 +55,7 @@ body{
     margin-left: 10%;
     margin-top: 8%;
   }
-  a {
+  #signup {
     text-decoration: none !important;
     color: black !important;
   }
@@ -136,7 +136,6 @@ body{
   }
 
   .name{
-    justify-content: right;
-    margin-right: 18rem;
-    display: flex;
+    letter-spacing: 1px;
+    font-weight: 500;
   }

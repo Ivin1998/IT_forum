@@ -28,7 +28,12 @@ const Singlequestion = ({ feeds }) => {
     }
   }, [feeds]);
   
-
+ // Check if any URL is present
+ const isUrlPresent = (
+  latestQnAnswers.includes('https') ||
+  latestQnAnswers.includes('http') ||
+  latestQnAnswers.includes('www')
+);
   const Deletequestions = async (id) => {
     setDeleted(false);
     Swal.fire({
@@ -84,7 +89,7 @@ const Singlequestion = ({ feeds }) => {
                 />
                 <div>
                   <Row className="answer-container">
-                    <span>{<div dangerouslySetInnerHTML={{ __html: answer.answer }} />
+                    <span>{<div style={isUrlPresent ? { color: 'blue', textDecoration: 'underline' } : {}} dangerouslySetInnerHTML={{ __html: answer.answer }} />
                   }</span>
                   </Row>
                 </div>

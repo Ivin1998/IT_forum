@@ -31,7 +31,7 @@ const ModalForm = ({ show, onHide }) => {
     //check the categories and map it
     Topics.forEach((topic) => {
       topic.keywords.forEach((keyword) => {
-        if (question.toLowerCase().includes(keyword.toLowerCase())) {
+        if (keyword && question.toLowerCase().includes(keyword.toLowerCase())) {
           matchedCategories.push(topic.category);
           isMatched = true; // Mark as matched
           return; // Exit the current keyword loop as we found a match

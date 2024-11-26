@@ -78,7 +78,13 @@ const Feedpage = () => {
 
   return (
     <div>
+      <Row>
+    <Col md={9}>
+    </Col>
+    <Col md={3}>
       <span className="name">Hey, {capitalizeFirstLetter(loggedInName)}!</span>
+    </Col>
+      </Row>
       <Container>
         <Row style={{ paddingTop: "50px" }}>
           <Col md={2} className="sidecontainer">

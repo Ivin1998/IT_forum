@@ -3,7 +3,6 @@ const answers = require("../models/answerModel");
 const generateToken = require("../utils/generateToken");
 const Multipleanswers = require("../models/multipleAnswersModel");
 
-
 const UpdateAnswer = asyncHandler(async (req, res) => {
   const { id, answerId, UpdatedAnswer } = req.body;
 
@@ -37,7 +36,6 @@ const getAnswer = async (req, res) => {
   const feed = await Multipleanswers.find({}).sort({ createdAt: -1 });
   res.json({ feed });
 };
-
 
 const getquestionsAnswer = async (req, res) => {
   const { id, answerId } = req.params;
@@ -88,24 +86,24 @@ const searchAnswer = async (req, res) => {
 
 const getCategoryquestion = async (req, res) => {
   const { category } = req.params;
- 
-  try {
 
+  try {
     if (!category) {
       res.status(400); // 400 Bad Request for missing parameters
       throw new Error("Category parameter is required");
     }
 
-    const feed = await Multipleanswers.findOne({ category });
+    const feed = await Multipleanswers.find({ category });
 
     if (!feed) {
       res.status(404); // 404 Not Found for missing category
       throw new Error("Category not found");
     }
-    res.json({ feeds: {
-      feed: [feed], // Wrap the feed object in an array
-    },});
-  
+    res.json({
+      feeds: {
+        feed: feed, // Wrap the feed object in an array
+      },
+    });
   } catch (error) {
     console.error(error.message);
     res.status(res.statusCode || 500).json({ error: error.message });

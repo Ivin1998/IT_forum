@@ -11,20 +11,20 @@ import utilities from "../Helpers/Utility";
 const Feedpage = () => {
 
   const { answer, question, deleted,feeds, setFeeds, search } = useContext(Contextreact);
-
-  const {loggedInName,capitalizeFirstLetter} = utilities();
-  
-  const userInfo = localStorage.getItem("userInfo") ?? "";
+  const userInfo = localStorage.getItem("userInfo");
 
   if (!userInfo) {
     const Guestdata = {
       name: "Guest User",
       email: "guest@ivin.com",
       isAdmin: false,
+      isGuest: true,
     };
     localStorage.setItem("userInfo", JSON.stringify(Guestdata));
   }
-
+  
+  const {loggedInName,capitalizeFirstLetter} = utilities();
+  
   const fetchfeeds = async () => {
     try {
       const config = {
@@ -53,10 +53,11 @@ const Feedpage = () => {
       );
       
       if(data.feed.length >0){
-        
         setFeeds(data);      
+      } else {
+        
+        setFeeds([]); // Reset feeds to empty if no results found
       }
-      
     } catch (error) {
       console.log(error);
     }
@@ -67,9 +68,10 @@ const Feedpage = () => {
   }, [answer, question, deleted]);
 
   useEffect(()=>{
-    if(search.length > 0){
+    if(search.trim().length > 0){
       fetchSearchfeeds(search);
-    }else{
+    }
+    else{
       fetchfeeds();
     }
 

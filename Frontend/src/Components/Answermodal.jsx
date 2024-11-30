@@ -122,7 +122,7 @@ const Answermodal = ({ question, author, id, answerId }) => {
         </Modal.Body>
         <Modal.Footer>
           <Button onClick={onHide}>Cancel</Button>
-          <Button onClick={() => Postanswer(answer,answerId)} disabled={!answer}>
+          <Button onClick={() => Postanswer(answer,answerId)} disabled={!answer.replace(/&nbsp;/g, ' ').trim()}>
             {!isEdit ? " Post your opinion" : "Update your opinion"}
           </Button>
         </Modal.Footer>

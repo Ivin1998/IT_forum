@@ -10,30 +10,35 @@ import { Contextreact } from "./Context";
 import AuthorIcon from "../assets/AuthorIcon";
 
 const Singlequestion = ({ feeds }) => {
-
   const helper = utilities();
   const hasAdminaccess = helper.isAdmin;
   const loggedinUser = helper.userEmail;
-  const { setDeleted,latestQnAnswers,setLatestQuestionAnswers } = useContext(Contextreact);
+  const { setDeleted, latestQnAnswers, setLatestQuestionAnswers } =
+    useContext(Contextreact);
 
   // Sort answers for each question and get the latest answer for getting it in edit
   useEffect(() => {
-    if (feeds?.feed) {
+    if (feeds?.feed && feeds.feed.length > 0) {
       const latestAnswers = feeds.feed.map((item) => {
-        const userAnswers = item?.answers?.filter(answer => answer.email === loggedinUser);
-        const latestAnswer = userAnswers.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))[0];
+        const userAnswers = item?.answers?.filter(
+          (answer) => answer.email === loggedinUser
+        );
+        const latestAnswer = userAnswers.sort(
+          (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+        )[0];
         return { ...item, latestAnswer };
       });
       setLatestQuestionAnswers(latestAnswers);
+    } else {
+      setLatestQuestionAnswers([]);
     }
   }, [feeds]);
-  
- // Check if any URL is present
- const isUrlPresent = (
-  latestQnAnswers.includes('https') ||
-  latestQnAnswers.includes('http') ||
-  latestQnAnswers.includes('www')
-);
+
+  // Check if any URL is present
+  const isUrlPresent =
+    latestQnAnswers.includes("https") ||
+    latestQnAnswers.includes("http") ||
+    latestQnAnswers.includes("www");
   const Deletequestions = async (id) => {
     setDeleted(false);
     Swal.fire({
@@ -62,55 +67,73 @@ const Singlequestion = ({ feeds }) => {
     });
   };
 
-
   return (
     <div>
-
-      {latestQnAnswers.map((item) => (
-        <Container  key={item._id} className="singlepost" >
-          <Col>
-            <Row>
-              <Col md={11}>
-                <Row style={{ padding: "25px" }}>
-                  <b>{item.question}</b>
-                </Row>
-              </Col>
-              <Col md={1} style={{ padding: "25px" }} hidden={!hasAdminaccess}>
-                <FaRegTrashCan
-                  onClick={() => Deletequestions(item._id)}
-                  style={{ cursor: "pointer" }}
-                />
-              </Col>
-            </Row>
-            {item?.answers?.map((answer) => (
-              <div key={answer._id}>
-                <AuthorIcon
-                  name={loggedinUser === answer.email ? "You" : answer.email}
-                />
-                <div>
-                  <Row className="answer-container">
-                    <span>{<div style={isUrlPresent ? { color: 'blue', textDecoration: 'underline' } : {}} dangerouslySetInnerHTML={{ __html: answer.answer }} />
-                  }</span>
+      {latestQnAnswers.length > 0 ? (
+        latestQnAnswers.map((item) => (
+          <Container key={item._id} className="singlepost">
+            <Col>
+              <Row>
+                <Col md={11}>
+                  <Row style={{ padding: "25px" }}>
+                    <b>{item.question}</b>
                   </Row>
+                </Col>
+                <Col
+                  md={1}
+                  style={{ padding: "25px" }}
+                  hidden={!hasAdminaccess}
+                >
+                  <FaRegTrashCan
+                    onClick={() => Deletequestions(item._id)}
+                    style={{ cursor: "pointer" }}
+                  />
+                </Col>
+              </Row>
+              {item?.answers?.map((answer) => (
+                <div key={answer._id}>
+                  <AuthorIcon
+                    name={loggedinUser === answer.email ? "You" : answer.email}
+                  />
+                  <div>
+                    <Row className="answer-container">
+                      <span>
+                        {
+                          <div
+                            style={
+                              isUrlPresent
+                                ? { color: "blue", textDecoration: "underline" }
+                                : {}
+                            }
+                            dangerouslySetInnerHTML={{ __html: answer.answer }}
+                          />
+                        }
+                      </span>
+                    </Row>
+                  </div>
                 </div>
-              </div>
-            ))}
-            <Row>
-              <Col md={10}></Col>
-              <Col md={2}>
-             
-              <Answermodal
-              question={item}
-              author={loggedinUser === item?.latestAnswer?.email ? "userPrivileges" : ""}
-              id={item._id}
-              answerId={item?.latestAnswer?._id}
-              />
-             
-              </Col>{" "}
-            </Row>
-          </Col>
-        </Container>
-      ))}
+              ))}
+              <Row>
+                <Col md={10}></Col>
+                <Col md={2}>
+                  <Answermodal
+                    question={item}
+                    author={
+                      loggedinUser === item?.latestAnswer?.email
+                        ? "userPrivileges"
+                        : ""
+                    }
+                    id={item._id}
+                    answerId={item?.latestAnswer?._id}
+                  />
+                </Col>{" "}
+              </Row>
+            </Col>
+          </Container>
+        ))
+      ) : (
+        <div className="no-topics"> No topics found..</div>
+      )}
     </div>
   );
 };

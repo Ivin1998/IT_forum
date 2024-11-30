@@ -14,7 +14,7 @@ const userSchema = mongoose.Schema(
         },
         password:{
             type: String,
-            required: true,
+            required: false,
         },
         isAdmin:{
             type:Boolean,
@@ -23,7 +23,7 @@ const userSchema = mongoose.Schema(
         },
         pic:{
             type: String,
-            required: true,
+            required: false,
             default:"https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg"
         },
     },

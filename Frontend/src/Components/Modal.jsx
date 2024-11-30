@@ -18,12 +18,9 @@ const ModalForm = ({ show, onHide }) => {
   const navigate = useNavigate();
 
   const helper = utilities();
-  const isGuest = helper.isGuest ?? false;
-
-  const userInfo = localStorage.getItem("userInfo");
-  const userInfoParsed = JSON.parse(userInfo);
-  const email = userInfoParsed?.email;
-  const name = userInfoParsed?.name;
+  const isGuest = helper.isGuest ?? false;  
+  const email = helper.userEmail;
+  const name = helper. loggedInName;
 
   const Postquestion = async (question) => {
     const matchedCategories = [];
@@ -105,7 +102,7 @@ const ModalForm = ({ show, onHide }) => {
         </Modal.Body>
         <Modal.Footer>
           <Button onClick={onHide}>Cancel</Button>
-          <Button onClick={() => Postquestion(question)} disabled={!question}>
+          <Button onClick={() => Postquestion(question)} disabled={!question.trim()}>
             Post question
           </Button>
         </Modal.Footer>

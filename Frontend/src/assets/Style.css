@@ -139,3 +139,10 @@ body{
     letter-spacing: 1px;
     font-weight: 500;
   }
+
+  .no-topics{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 50vh;
+  }

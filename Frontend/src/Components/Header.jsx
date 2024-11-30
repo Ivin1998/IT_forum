@@ -27,7 +27,7 @@ const Header = () => {
   };
 
   const search =(value)=>{
-    setSearch(value);
+    setSearch(value.trim());
   }
 
   return (
@@ -51,6 +51,7 @@ const Header = () => {
               <InputGroup style={{ width: "100%" }}>
                 <Form.Control
                   aria-label="Large"
+                  placeholder="Search specific topic..."
                   aria-describedby="inputGroup-sizing-default"
                   onChange={(e)=>search(e.target.value)}
                 />

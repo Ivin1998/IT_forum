@@ -98,6 +98,7 @@ const ModalForm = ({ show, onHide }) => {
             onChange={(e) => setQuestion(e.target.value)}
             value={question}
             placeholder='Start your question with "how", "what", "who" etc...'
+            maxLength={500}
           />
         </Modal.Body>
         <Modal.Footer>

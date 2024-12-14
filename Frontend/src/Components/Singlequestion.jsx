@@ -92,11 +92,12 @@ const Singlequestion = ({ feeds }) => {
               </Row>
               {item?.answers?.map((answer) => (
                 <div key={answer._id}>
-                  <AuthorIcon
-                    name={loggedinUser === answer.email ? "You" : answer.email}
-                  />
                   <div>
-                    <Row className="answer-container">
+                    <div className="answer-container">
+                  <AuthorIcon
+                    name={loggedinUser === answer.email ? `${answer.email} - You` : answer.email}
+                    style={{ marginBottom: "5px !important" }} 
+                  />
                       <span>
                         {
                           <div
@@ -109,7 +110,7 @@ const Singlequestion = ({ feeds }) => {
                           />
                         }
                       </span>
-                    </Row>
+                    </div>
                   </div>
                 </div>
               ))}

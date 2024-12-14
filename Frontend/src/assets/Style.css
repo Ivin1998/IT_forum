@@ -24,15 +24,9 @@ body{
 .tip-content{
    color: darkblue;
 }
-.sidecontainer{
- 
-    height: 100%;
-
-}
 .feedcontainer{
     background-color: #d4e9ec;
     width: 100%;
-    /* height: 50rem; */
     margin-left: 30px;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -98,6 +92,7 @@ body{
 
   .sidecontainer{
     border-radius: 8px;
+    height: 100%;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   }
 

@@ -39,19 +39,19 @@ const Header = () => {
       >
         <Container>
           <Col md={2}>
-            <Navbar.Brand href="#home">Public Forum </Navbar.Brand>
+            <Navbar.Brand href="#home">InnovateHub </Navbar.Brand>
           </Col>
           <Col md={2}>
-            <Nav className="me-auto">
+            {/* <Nav className="me-auto">
               <Nav.Link href="#categories">Categories</Nav.Link>
-            </Nav>
+            </Nav> */}
           </Col>
           <Col md={3}>
             <Nav>
               <InputGroup style={{ width: "100%" }}>
                 <Form.Control
                   aria-label="Large"
-                  placeholder="Search specific topic..."
+                  placeholder="Search specific topics..."
                   aria-describedby="inputGroup-sizing-default"
                   onChange={(e)=>search(e.target.value)}
                 />
